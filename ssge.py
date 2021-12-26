@@ -5,9 +5,9 @@ import gpytorch
 
 class SSGE(torch.nn.Module):
     def __init__(self, kernel: gpytorch.kernels.Kernel, eig_prop_threshold: float = 0.99, noise = 1e-8):
-        super(SSGE, self)__init__()
+        super(SSGE, self).__init__()
         self.kernel = kernel
-        assert self.noise >= 0, 
+        assert self.noise >= 0, "Constant noise should be greater than 0."
         self.noise = noise
         self.eig_prop_threshold = eig_prop_threshold
 
