@@ -1,7 +1,7 @@
 # pytorch-SSGE
 ## Introduction
 - Unofficial PyTorch Reimplementation of the paper "A Spectral Approach to Gradient Estimation for Implicit Distributions" (https://arxiv.org/abs/1806.02925), Shi et. al.
-- Compatiable to use the kernel modules in [GPyTorch] (https://gpytorch.ai/) and supports optimization with respect to kernel hyperparameters.
+- Compatiable to use the kernel modules in [GPyTorch](https://gpytorch.ai/) and supports optimization with respect to kernel hyperparameters.
 
 ## Example
 
@@ -43,6 +43,7 @@ estimator.grad(test_sample)
 ```
 
 ## References
+```
 @misc{shi2018spectral,
       title={A Spectral Approach to Gradient Estimation for Implicit Distributions}, 
       author={Jiaxin Shi and Shengyang Sun and Jun Zhu},
@@ -59,3 +60,4 @@ estimator.grad(test_sample)
       archivePrefix={arXiv},
       primaryClass={cs.LG}
 }
+```
