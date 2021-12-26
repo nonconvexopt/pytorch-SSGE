@@ -1,10 +1,9 @@
 import math
 import torch
-import torch.nn as nn
 import gpytorch
 
 
-class SSGE(nn.Module):
+class SSGE(torch.nn.Module):
     def __init__(self, kernel: gpytorch.kernels.Kernel, eig_prop_threshold: float = 0.99, noise = 1e-8):
         super(SSGE, self)__init__()
         self.kernel = kernel
