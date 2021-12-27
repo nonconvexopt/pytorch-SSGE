@@ -7,19 +7,23 @@ class SSGE(torch.nn.Module):
     def __init__(self, kernel: gpytorch.kernels.Kernel, eig_prop_threshold: float = 0.99, noise = 1e-8):
         super(SSGE, self).__init__()
         self.kernel = kernel
-        assert self.noise >= 0, "Constant noise should be greater than 0."
-        self.noise = noise
-        self.eig_prop_threshold = eig_prop_threshold
+        assert noise >= 0, "Constant noise should not be negative"
+        if noise == 0.0:
+            self.register_parameter('noise', None)
+        else:
+            self.noise = torch.nn.Parameter(math.log(noise))
 
         # Save samples directly
         self.sample = None
         self.gram = None
 
         # Parameters required to inference estimating gradients of arbitary samples.
+        self.eig_prop_threshold = eig_prop_threshold
         self.K = None
         self.eigval = None
         self.eigvec = None
         self.beta = None
+
 
     def fit(self, x: torch.Tensor) -> None:
         assert x.requires_grad, "'requires_grad' of input tensor must be set to True."
@@ -31,9 +35,10 @@ class SSGE(torch.nn.Module):
 
         m = self.sample.shape[0]
         self.dim = self.sample.shape[1]
+
         self.K = self.kernel(self.sample).evaluate()
         if self.noise:
-            self.K = self.K + self.noise * torch.eye(m, dtype=self.sample.dtype, device=self.sample.device)
+            self.K = self.K + torch.eye(m, dtype=self.sample.dtype, device=self.sample.device).mul(self.noise.exp())
 
         eigval, eigvec = torch.linalg.eigh(self.K)
         # TODO: Replace with torch.lobpcg once its numerical stablity improved.
@@ -60,6 +65,7 @@ class SSGE(torch.nn.Module):
             inputs = input_tensor,
             retain_graph = True,
         )[0].mean(0)
+
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         assert self.beta is not None, "Train samples should be fitted with `.fit()` before estimating gradients."
