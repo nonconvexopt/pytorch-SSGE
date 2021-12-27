@@ -36,8 +36,7 @@ class SSGE(torch.nn.Module):
             self.K = self.K + self.noise * torch.eye(m, dtype=self.sample.dtype, device=self.sample.device)
 
         eigval, eigvec = torch.linalg.eigh(self.K)
-        # Tried to use torch.lobpcg as alternative to torch.linalg.eigh
-        # but it is discovered that it is not stable yet.
+        # TODO: Replace with torch.lobpcg once its numerical stablity improved.
         # self.eigval, self.eigvec = torch.lobpcg(self.K, min(int(m / 3), self.dim))
         with torch.no_grad():
             eig_props = eigval.cumsum(-1) / eigval.sum(-1, keepdims=True)
