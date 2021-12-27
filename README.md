@@ -39,7 +39,7 @@ estimator.fit(sample)
 # Estimate gradient of target samples.
 test_sample = dist.sample([100])
 test_sample.requires_grad_(True)
-estimator.grad(test_sample)
+estimator.forward(test_sample)
 ```
 
 ## References
