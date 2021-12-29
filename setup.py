@@ -22,5 +22,5 @@ setup(
     install_requires=install_requires,
     setup_requires=setup_requires,
     dependency_links=dependency_links,
-    scripts=["ssge.py"],
+    py_modules=['core'],
 )
