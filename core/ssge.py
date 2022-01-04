@@ -11,7 +11,7 @@ class SSGE(torch.nn.Module):
         if noise == 0.0:
             self.register_parameter('noise', None)
         else:
-            self.noise = torch.nn.Parameter(math.log(noise))
+            self.noise = torch.nn.Parameter(torch.tensor(math.log(noise)))
 
         # Save samples directly
         self.sample = None
