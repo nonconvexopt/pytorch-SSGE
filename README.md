@@ -1,13 +1,15 @@
-# pytorch-SSGE
+# [WIP] pytorch-SSGE
 ## Introduction
-- Unofficial PyTorch Reimplementation of the paper "A Spectral Approach to Gradient Estimation for Implicit Distributions" (https://arxiv.org/abs/1806.02925), Shi et. al.
+- Unofficial PyTorch implementation of the paper "A Spectral Approach to Gradient Estimation for Implicit Distributions" (https://arxiv.org/abs/1806.02925), Shi et. al.
 - Compatiable to use the kernel modules in [GPyTorch](https://gpytorch.ai/) and supports optimization with respect to kernel hyperparameters.
 
 ## Example
 
 ```python
-from ssge import SSGE
 import gpytorch
+
+from torch_ssge import SSGE
+
 
 # Distribution to generate samples for testing
 dist = torch.distributions.multivariate_normal.MultivariateNormal(
