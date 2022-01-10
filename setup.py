@@ -9,12 +9,14 @@ install_requires = [
     ]
 
 setup(
-    name='torch_ssge',
+    name='torch-ssge',
     description='PyTorch implementation of the Spectral Stein Gradient Estimator.',
     version='0.1.0',
     author='Juhyeong Kim',
     author_email='nonconvexopt@gmail.com',
+    url='git@github.com:nonconvexopt/pytorch_ssge.git',
     python_requires='>=3.6',
     install_requires=install_requires,
+    packages=find_packages(exclude = []),
     py_modules=['core'],
 )
