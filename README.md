@@ -46,7 +46,7 @@ grads = estimator(test_sample)
 ```
 
 ## Simple examples
-- Standard Normal
+[- Standard Normal](https://github.com/nonconvexopt/pytorch_ssge/blob/master/examples/standard_normal.ipynb)
 - Mixture distribution
 
 ## References
