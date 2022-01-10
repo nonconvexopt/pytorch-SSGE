@@ -3,7 +3,7 @@
 - Unofficial PyTorch implementation of the paper "A Spectral Approach to Gradient Estimation for Implicit Distributions" (https://arxiv.org/abs/1806.02925), Shi et. al.
 - Compatiable to use the kernel modules in [GPyTorch](https://gpytorch.ai/) and supports optimization with respect to kernel hyperparameters.
 
-## Example
+## Example Usage
 
 ```python
 import gpytorch
@@ -41,8 +41,13 @@ estimator.fit(sample)
 # Estimate gradient of target samples.
 test_sample = dist.sample([100])
 test_sample.requires_grad_(True)
-estimator(test_sample)
+
+grads = estimator(test_sample)
 ```
+
+## Simple examples
+- Standard Normal
+- Mixture distribution
 
 ## References
 ```
