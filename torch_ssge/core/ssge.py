@@ -13,7 +13,7 @@ class SSGE(torch.nn.Module):
         else:
             self.noise = torch.nn.Parameter(torch.tensor(math.log(noise)))
 
-        # Save samples directly
+        # Save cloned samples and its gram matrix
         self.sample = None
         self.gram = None
 
@@ -26,12 +26,12 @@ class SSGE(torch.nn.Module):
 
 
     def fit(self, x: torch.Tensor) -> None:
-        assert x.requires_grad, "'requires_grad' of input tensor must be set to True."
+        new_sample = x.clone().requires_grad_(True)
 
         if self.sample is not None:
-            self.sample = torch.cat([self.sample, x], axis=0)
+            self.sample = torch.cat([self.sample, new_sample], axis=0)
         else:
-            self.sample = x
+            self.sample = new_sample
 
         m = self.sample.shape[0]
         self.dim = self.sample.shape[1]

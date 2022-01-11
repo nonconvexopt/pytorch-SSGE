@@ -39,12 +39,10 @@ estimator = SSGE(
 
 # Fit Context Samples.
 sample = dist.sample([100])
-sample.requires_grad_(True)
 estimator.fit(sample)
 
 # Estimate gradient of target samples.
 test_sample = dist.sample([100])
-test_sample.requires_grad_(True)
 
 grads = estimator(test_sample)
 ```
