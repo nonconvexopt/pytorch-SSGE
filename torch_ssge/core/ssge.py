@@ -40,15 +40,17 @@ class SSGE(torch.nn.Module):
         if self.noise:
             self.K = self.K + torch.eye(m, dtype=self.sample.dtype, device=self.sample.device).mul(self.noise.exp())
 
+        # Test torch.lobpcg
+        """
         eigval, eigvec = torch.linalg.eigh(self.K)
-        # TODO: Replace with torch.lobpcg once its numerical stablity improved.
-        # self.eigval, self.eigvec = torch.lobpcg(self.K, min(int(m / 3), self.dim))
         with torch.no_grad():
             eig_props = eigval.cumsum(-1) / eigval.sum(-1, keepdims=True)
             eig_props *= eig_props < self.eig_prop_threshold
             self.j = torch.argmax(eig_props, -1)
         self.eigval = eigval[:self.j]
         self.eigvec = eigvec[:, :self.j]
+        """
+        self.eigval, self.eigvec = torch.lobpcg(self.K, min(int(m / 3), self.dim), method="ortho")       
         assert (self.eigval > 0).all(), "Kernel matrix is not postive definite."
 
         input_tensor = self.sample.unsqueeze(-1).repeat(1, 1, self.j)
