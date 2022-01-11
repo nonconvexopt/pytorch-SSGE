@@ -3,6 +3,11 @@
 - Unofficial PyTorch implementation of the paper "A Spectral Approach to Gradient Estimation for Implicit Distributions" (https://arxiv.org/abs/1806.02925), Shi et. al.
 - Compatiable to use the kernel modules in [GPyTorch](https://gpytorch.ai/) and supports optimization with respect to kernel hyperparameters.
 
+## Installation
+```python
+python -m pip install git+https://github.com/nonconvexopt/pytorch-ssge.git
+```
+
 ## Example Usage
 
 ```python
