@@ -48,8 +48,8 @@ grads = estimator(test_sample)
 ```
 
 ## Simple examples
-[- Standard Normal](https://github.com/nonconvexopt/pytorch_ssge/blob/master/examples/standard_normal.ipynb)
-- Mixture distribution
+[- Standard Normal](https://github.com/nonconvexopt/pytorch-ssge/blob/master/examples/standard_normal.ipynb)
+[- Mixture distribution](https://github.com/nonconvexopt/pytorch-ssge/blob/master/examples/gaussian_mixture.ipynb)
 
 ## References
 ```
