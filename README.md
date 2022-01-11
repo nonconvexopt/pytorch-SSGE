@@ -70,3 +70,6 @@ grads = estimator(test_sample)
       primaryClass={cs.LG}
 }
 ```
+
+## Acknowledgement
+The implementation of the referred CC BY 4.0 licensed conference publications was conducted while the reproducer, Juhyeong Kim, was supported by the Military Science and Technology Soldier program at Artificial Intelligence Research and Development Division, Republic of Korea Army Training and Doctrine Command.
