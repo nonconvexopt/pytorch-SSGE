@@ -18,6 +18,6 @@ setup(
     python_requires='>=3.6',
     install_requires=install_requires,
     packages=['torch_ssge'],
-    package_dir={'torch_ssge':'torch_ssge'}
+    package_dir={'torch_ssge':'torch_ssge'},
     py_modules=['core'],
 )
