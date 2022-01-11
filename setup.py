@@ -1,5 +1,3 @@
-from glob import glob
-from os.path import basename, splitext
 from setuptools import setup
 
 
@@ -11,7 +9,7 @@ install_requires = [
 setup(
     name='torch-ssge',
     description='PyTorch implementation of the Spectral Stein Gradient Estimator.',
-    version='0.1.0',
+    version='0.2.0',
     author='Juhyeong Kim',
     author_email='nonconvexopt@gmail.com',
     url='git@github.com:nonconvexopt/pytorch_ssge.git',
