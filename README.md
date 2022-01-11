@@ -9,7 +9,6 @@ python -m pip install git+https://github.com/nonconvexopt/pytorch-ssge.git
 ```
 
 ## Example Usage
-
 ```python
 import gpytorch
 
