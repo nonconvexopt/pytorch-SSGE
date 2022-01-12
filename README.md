@@ -47,7 +47,7 @@ test_sample = dist.sample([100])
 grads = estimator(test_sample)
 ```
 
-## Simple examples
+## Examples
 [- Standard Normal](https://github.com/nonconvexopt/pytorch-ssge/blob/master/examples/standard_normal.ipynb)<br>
 [- Mixture distribution](https://github.com/nonconvexopt/pytorch-ssge/blob/master/examples/gaussian_mixture.ipynb)<br>
 
@@ -71,5 +71,5 @@ grads = estimator(test_sample)
 }
 ```
 
-## Acknowledgement
+## Acknowledgements
 The implementation of the referred CC BY 4.0 licensed conference publications was conducted while the reproducer, Juhyeong Kim, was supported by the Military Science and Technology Soldier program as an Artificial Intelligence Research Soldier at Artificial Intelligence Research and Development Division, Republic of Korea Army Training and Doctrine Command.
