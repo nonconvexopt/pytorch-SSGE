@@ -36,6 +36,7 @@ class SSGE(torch.nn.Module):
         m = self.sample.shape[0]
         self.dim = self.sample.shape[1]
 
+        # TODO: calculate grad here for kernel
         self.K = self.kernel(self.sample).evaluate()
         if self.noise:
             self.K = self.K + torch.eye(m, dtype=self.sample.dtype, device=self.sample.device).mul(self.noise.exp())
