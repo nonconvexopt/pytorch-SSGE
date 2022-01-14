@@ -7,11 +7,6 @@ class SSGE(torch.nn.Module):
     def __init__(self, kernel: gpytorch.kernels.Kernel, eig_prop_threshold: float = 0.99, noise = 1e-8):
         super(SSGE, self).__init__()
         self.kernel = kernel
-        assert noise >= 0, "Constant noise should not be negative"
-        if noise == 0.0:
-            self.register_parameter('noise', None)
-        else:
-            self.noise = torch.nn.Parameter(torch.tensor(math.log(noise)))
 
         # Save cloned samples and its gram matrix
         self.sample = None
@@ -36,10 +31,7 @@ class SSGE(torch.nn.Module):
         m = self.sample.shape[0]
         self.dim = self.sample.shape[1]
 
-        # TODO: calculate grad here for kernel
-        self.K = self.kernel(self.sample).evaluate()
-        if self.noise:
-            self.K = self.K + torch.eye(m, dtype=self.sample.dtype, device=self.sample.device).mul(self.noise.exp())
+        self.K = self.kernel(self.sample, self.sample.clone()).evaluate()
 
         # TODO: find mechanism to find largest eigvals considering the proportions.
         eigval, eigvec = torch.lobpcg(self.K, self.dim, method="ortho")
@@ -58,10 +50,14 @@ class SSGE(torch.nn.Module):
             self.eigvec,
             self.eigval.reciprocal()
         )
+        
         # beta should have size d x j
         self.beta = - torch.autograd.grad(
             outputs = eigfun_hat,
-            grad_outputs = torch.ones(eigfun_hat.shape, dtype=eigfun_hat.dtype, device=eigfun_hat.device),
+            grad_outputs = torch.ones(
+                eigfun_hat.shape,
+                dtype=eigfun_hat.dtype,
+                device=eigfun_hat.device),
             inputs = input_tensor,
             retain_graph = True,
         )[0].mean(0)
