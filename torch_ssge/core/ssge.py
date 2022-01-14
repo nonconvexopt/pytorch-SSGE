@@ -33,7 +33,8 @@ class SSGE(torch.nn.Module):
 
         self.K = self.kernel(self.sample, self.sample.clone()).evaluate()
 
-        # TODO: find mechanism to find largest eigvals considering the proportions.
+        # TODO: find mechanism to find largest eigvals considering the proportions
+        #       while not caculating all eigenvalues in torch.lobpcg.
         eigval, eigvec = torch.lobpcg(self.K, self.dim, method="ortho")
         with torch.no_grad():
             eig_props = eigval.cumsum(-1) / eigval.sum(-1, keepdims=True)
