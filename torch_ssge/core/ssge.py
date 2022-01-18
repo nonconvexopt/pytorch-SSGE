@@ -41,9 +41,6 @@ class SSGE(torch.nn.Module):
             retain_graph = True,
         )[0]
 
-        # https://arxiv.org/pdf/1806.02925.pdf
-        # https://github.com/thjashin/spectral-stein-grad/blob/master/estimator/spectral.py
-
         # TODO: find mechanism to find largest eigvals considering the proportions
         #       while not caculating all eigenvalues in torch.lobpcg.
         eigval, eigvec = torch.lobpcg(self.gram, self.dim, method="ortho")
