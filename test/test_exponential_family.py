@@ -1,5 +1,6 @@
 import pytest
 
+import torch
 
 # Example is consist of (sampler instance, <log density method>)
 EXAMPLES = [
@@ -16,5 +17,9 @@ EXAMPLES = [
 ]
 
 
-def test_exponential_family():
-    assert 
+@pytest.fixtures(params=EXAMPLES)
+def distribution(request):
+    return request.param
+
+def test_exponential_family(dist):
+    
