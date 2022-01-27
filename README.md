@@ -72,4 +72,4 @@ grads = estimator(test_sample)
 ```
 
 ## Acknowledgements
-The implementation of the referred CC BY 4.0 licensed conference publications was conducted while the reproducer, Juhyeong Kim, was supported by the Military Science and Technology Soldier program as an Artificial Intelligence Research Soldier at Artificial Intelligence Research and Development Division, Republic of Korea Army Training and Doctrine Command.
+The implementation of the referred CC BY 4.0 licensed conference publications was conducted while the reproducer, Juhyeong Kim, was supported by the Military Science and Technology Soldier program at the Republic of Korea Army.
