@@ -52,6 +52,8 @@ grads = estimator(test_sample)
 [- Mixture distribution](https://github.com/nonconvexopt/pytorch-ssge/blob/master/examples/gaussian_mixture.ipynb)<br>
 
 ## References
+- [Official, TensorFlow implementation](https://github.com/thjashin/spectral-stein-grad)
+- Conference Publications
 ```
 @misc{shi2018spectral,
       title={A Spectral Approach to Gradient Estimation for Implicit Distributions}, 
