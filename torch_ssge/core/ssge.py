@@ -35,7 +35,7 @@ class SSGE(torch.nn.Module):
         self.gram = self.kernel(self.sample, self.sample.clone()).evaluate()
         if self.noise:
             self.gram = self.gram + self.noise * torch.eye(self.gram.shape[-1], dtype=self.gram.dtype, device=self.gram.device)
-        self.grad_mean_sample_K = 0.5 * torch.autograd.grad(
+        self.grad_mean_sample_K = torch.autograd.grad(
             outputs = self.gram.sum(),
             inputs = self.sample,
             retain_graph = True,
@@ -68,20 +68,12 @@ class SSGE(torch.nn.Module):
         )[0].mean(0)
 
         beta = - torch.einsum(eigvec, self.grad_mean_sample_K) / eigval.unsqueeze(-1)
-        # grads: [..., N, x_dim]
-        grads = tf.matmul(eigen_ext, beta)
-
-        Kxq = self.gram(x, samples, kernel_width)
-        # Kxq = tf.Print(Kxq, [tf.shape(Kxq)], message="Kxq:")
-        # ret: [..., N, n_eigen]
-        ret = tf.sqrt(tf.to_float(self.M)) * tf.matmul(Kxq, eigen_vectors)
-        ret *= 1. / tf.expand_dims(eigen_values, axis=-2)
         return ret
 
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         assert self.beta is not None, "Train samples should be fitted with `.fit()` before estimating gradients."
-        _x = x.clone().requires_grad_(True)
+        new_sample = x.clone().requires_grad_(True)
 
         gram_wing = self.kernel(_x, self.sample).evaluate()
         eigfun_hat = math.sqrt(self.M) * torch.einsum("nm,mj->nj", K_wing, self.eigvec) / self.eigval
