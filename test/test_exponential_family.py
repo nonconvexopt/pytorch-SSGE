@@ -2,7 +2,9 @@ import pytest
 
 import torch
 
-# Example is consist of (sampler instance, <log density method>)
+
+# Example is consist of (<sampler instance>)
+# <sampler instance> should have '.sample' and 'log_prob' method.
 EXAMPLES = [
     torch.distributions.uniform.Uniform,
     torch.distributions.laplace.Laplace,
@@ -16,10 +18,6 @@ EXAMPLES = [
     torch.distributions.multinomial.Multinomial,
 ]
 
-
-@pytest.fixtures(params=EXAMPLES)
-def distribution(request):
-    return request.param
-
-def test_exponential_family(dist):
-    
+@pytest.mark.parametrize("sampler", EXAMPLES)
+def test_exponential_family(sampler):
+    sampler.sample()
