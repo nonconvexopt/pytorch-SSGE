@@ -2,6 +2,8 @@ import pytest
 
 import torch
 
+import gpytorch
+from torch_ssge import SSGE
 
 # Example is consist of (<sampler instance>)
 # <sampler instance> should have '.sample' and 'log_prob' method.
@@ -18,11 +20,10 @@ EXAMPLES = [
     torch.distributions.multinomial.Multinomial,
 ]
 
+
 @pytest.mark.parametrize("torch_dist", EXAMPLES)
 def test_exponential_family(torch_dist):
     dist = torch_dist()
-        
-    kernel = gpytorch.kernels.RBFKernel()
 
     estimator = SSGE(
         gpytorch.kernels.ScaleKernel(gpytorch.kernels.RBFKernel()),
@@ -31,15 +32,16 @@ def test_exponential_family(torch_dist):
     )
 
     sample = dist.sample((100, 1))
-    log_probs = dist.log_prob(sample)
     estimator.fit(sample)
 
     mean = dist.mean
     sqrt = dist.var.sqrt()
-    
+
     test_points = torch.linspace(mean - 3 * sqrt, mean + 3 * sqrt, 500)
     test_points.requires_grad_()
     grad_estimate = estimator(test_points)
-    grad_anlytical = torch.autograd.grad(dist.log_prob(test_points), test_points)[0]
+    grad_analytical = torch.autograd.grad(
+        dist.log_prob(test_points),
+        test_points
+    )[0]
     assert torch.allclose(grad_estimate, grad_analytical)
-    
