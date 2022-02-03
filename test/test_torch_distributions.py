@@ -44,4 +44,4 @@ def test_exponential_family(torch_dist):
         dist.log_prob(test_points),
         test_points
     )[0]
-    assert torch.allclose(grad_estimate, grad_analytical)
+    assert torch.allclose(grad_estimate, grad_analytical, atol = 0.1, rtol = 0.)
