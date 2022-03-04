@@ -20,14 +20,19 @@ EXAMPLES = [
     torch.distributions.multinomial.Multinomial,
 ]
 
+KERNELS = [
+    gpytorch.kernels.ScaleKernel(gpytorch.kernels.RBFKernel()),
+    gpytorch.kernels.ScaleKernel(gpytorch.kernels.MaternKernel()),
+]
+
 
 @pytest.mark.parametrize("torch_dist", EXAMPLES)
-def test_exponential_family(torch_dist):
+@pytest.mark.parametrize("gpytorch_kernel", KERNELS)
+def test_exponential_family(torch_dist, gpytorch_kernel):
     dist = torch_dist()
 
     estimator = SSGE(
-        gpytorch.kernels.ScaleKernel(gpytorch.kernels.RBFKernel()),
-        # gpytorch.kernels.ScaleKernel(gpytorch.kernels.MaternKernel()),
+        gpytorch_kernel,
         noise=1e-3
     )
 
